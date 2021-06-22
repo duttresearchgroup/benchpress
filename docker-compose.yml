@@ -1,0 +1,9 @@
+version: '3'
+services:
+  benchpress.builder:
+    image: benchpress.builder
+    build: .
+    volumes:
+      - T:\docker_file\fbkutils:/workspace/fbkutils
+
+# Used for legacy compilation
