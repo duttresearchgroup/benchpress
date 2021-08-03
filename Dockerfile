@@ -21,6 +21,6 @@ RUN wget https://ftp.gnu.org/gnu/time/time-1.9.tar.gz && \
         make && \
         make install
 	
-WORKDIR /workspace
+WORKDIR /workspace/fbkutils/benchpress
 
 CMD [ "bash" ]
