@@ -17,3 +17,24 @@ We are using a docker container based runtime for running the benchpress benchma
     ``` 
     docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "fio aio" 
     ```
+* Schbench
+    ```
+    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "schbench default"
+    ```
+    
+* Gapbs 
+    ```
+    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "gapbs_bc"
+    ```
+* Nginx_Wrk
+    ```
+   docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "nginx_wrk_bench default"
+    ```
+* Silo
+    ```
+    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run " silo default"
+    ```
+* Minebench 
+    ```
+    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "minebench_plsa default"
+    ```
