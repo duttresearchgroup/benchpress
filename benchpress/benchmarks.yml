@@ -1,0 +1,95 @@
+schbench:
+  parser: schbench
+  path: ./benchmarks/schbench
+  metrics:
+    - latency:
+        - p50
+        - p75
+        - p90
+        - p95
+        - p99
+        - p99.5
+        - p99.9
+
+fio:
+  parser: fio
+  path: ./benchmarks/fio
+  metrics: []
+
+silo:
+  parser: silo
+  path: ./benchmarks/dbtest
+  metrics:
+    - throughput:
+        - agg_throughput
+        - avg_per_core_throughput
+    - latency:
+        - avg_latency
+
+nginx_wrk_bench:
+  parser: nginx_wrk_bench
+  path: ./benchmarks/nginx_wrk_bench.sh
+  metrics:
+    - 'Requests/sec'
+
+oss_performance:
+  parser: json
+  path: ./benchmarks/oss-performance/run.sh
+  metrics: []
+
+minebench_kmeans:
+  parser: minebench_kmeans
+  path: ./benchmarks/minebench/time_wrap.sh
+  metrics:
+    - execution_time:
+      - real
+      - user
+      - sys
+
+minebench_plsa:
+  parser: minebench_plsa
+  path: ./benchmarks/minebench/plsa
+  metrics:
+    - execution_time:
+      - total_time
+
+minebench_rsearch:
+  parser: minebench_rsearch
+  path: ./benchmarks/minebench/rsearch/bin/rsearch
+  metrics:
+    - execution_time:
+      - total_time
+
+gapbs_bc:
+  parser: gapbs
+  path: ./benchmarks/gapbs/bc
+  metrics:
+    - generate_time
+    - build_time
+    - trial_time
+    - average_time
+
+gapbs_bfs:
+  parser: gapbs
+  path: ./benchmarks/gapbs/bfs
+  metrics:
+    - generate_time
+    - build_time
+    - trial_time
+    - average_time
+
+gapbs_tc:
+  parser: gapbs
+  path: ./benchmarks/gapbs/tc
+  metrics:
+    - generate_time
+    - build_time
+    - trial_time
+    - average_time
+
+graph500_omp_csr:
+  parser: graph500
+  path: ./benchmarks/graph500/omp-csr
+  metrics:
+    - harmonic_mean_TEPS
+    - harmonic_stddev_TEPS

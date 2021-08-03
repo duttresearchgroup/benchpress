@@ -1,0 +1,8 @@
+.*
+*.d
+*.o
+*.s
+!.gitignore
+
+# keep travis
+!.travis.yml

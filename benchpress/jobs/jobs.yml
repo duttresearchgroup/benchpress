@@ -1,0 +1,157 @@
+- benchmark: schbench
+  name: schbench default
+  description: defaults for schbench
+  args:
+    message-threads: 2
+    threads: 16
+    runtime: 30
+    sleeptime: 10000
+    cputime: 10000
+    pipe: 0
+    rps: 0
+- benchmark: schbench
+  name: schbench-load-test
+  description: p95 latency when cpu under high load
+  args:
+    message-threads: 2
+    threads: 16
+    runtime: 30
+    sleeptime: 30000
+    cputime: 30000
+    pipe: 0
+    rps: 0
+  hook:
+    hook: cpu-limit
+    options: 0xfffffffff
+- name: fio tests
+  description: fio tests
+  tests:
+  - fio null
+  - fio aio
+- benchmark: fio
+  name: fio null
+  description: read /dev/null
+  args:
+    - --output-format=json
+    - jobs/null.fio
+  metrics:
+    - 'null':
+        - read:
+          - bw
+- benchmark: fio
+  name: fio aio
+  description: read 4 files with aio at different depths
+  args:
+    - --output-format=json
+    - jobs/aio-read.fio
+  hooks:
+    - hook: file
+      options:
+        - type: dir
+          path: ./data1
+  metrics:
+    - file1: &aiofilemetrics
+      - read: &aiorwmetrics
+        - bw
+        - iops_mean
+        - iops_stddev
+        - lat_ns:
+          - mean
+          - stddev
+      - write: *aiorwmetrics
+    - file2: *aiofilemetrics
+    - file3: *aiofilemetrics
+    - file4: *aiofilemetrics
+- benchmark: silo
+  name: silo default
+  description: defaults for silo
+  args:
+    verbose: true
+    bench: tpcc
+    num-threads: 1
+    scale-factor: 1
+    runtime: 1
+- benchmark: nginx_wrk_bench
+  name: nginx_wrk_bench default
+  description: defaults for nginx_wrk_bench
+  args:
+    - '-c400'  # Connections
+    - '-d30s'  # Duration
+    - '-t32'   # Threads
+    - 'http://127.0.0.1:8080/index.html'
+
+- benchmark: oss_performance
+  name: oss_performance
+  description: Default run for oss_performance
+  args:
+    - '-rhhvm'
+    - '-n./benchmarks/nginx/sbin/nginx'
+    - '-s./benchmarks/siege/bin/siege'
+    - '--'
+    - '--mediawiki'
+    - '--siege-duration 10M'
+    - '--siege-timeout 11m'
+- benchmark: minebench_kmeans
+  name: minebench_kmeans default
+  description: defaults for minebench_kmeans
+  args:
+    - 'benchmarks/minebench/kmeans'
+    - '-b'  # binary input
+    - '-o'  # output time
+    - '-p 32'  # threads to use
+    - '-m 50'  # max number of clusters
+    - '-n 4'   # min number of clusters
+    - '-f'     # fuzzy kmeans
+    - '-i benchmarks/minebench/datasets/kmeans/edge'  # dataset to cluster
+
+- benchmark: minebench_plsa
+  name: minebench_plsa default
+  description: defaults for minebench_plsa
+  args:
+    - 'benchmarks/minebench/datasets/PLSA/30k_1.txt'
+    - 'benchmarks/minebench/datasets/PLSA/30k_2.txt'
+    - 'benchmarks/minebench/datasets/PLSA/pam120.bla'
+    - '600'
+    - '400'
+    - '3'
+    - '3'
+    - '1'
+    - '32'
+
+- benchmark: minebench_rsearch
+  name: minebench_rsearch default
+  description: defaults for minebench_rsearch
+  args:
+    - '-n 100000'
+    - '-c'
+    - '-E 100'
+    - '-m benchmarks/minebench/datasets/rsearch/matrices/RIBOSUM85-60.mat'
+    - 'benchmarks/minebench/datasets/rsearch/Queries/mir-40.stk'
+    - 'benchmarks/minebench/datasets/rsearch/Databasefile/100Kdb.fa'
+
+- benchmark: gapbs_bc
+  name: gapbs_bc
+  description: GAP bc benchmark
+  args:
+    - -u 21
+    - -n 1
+
+- benchmark: gapbs_bfs
+  name: gapbs_bfs
+  description: GAP bfs benchmark
+  args:
+    - -u 21
+    - -n 1
+
+- benchmark: gapbs_tc
+  name: gapbs_tc
+  description: GAP tc benchmark
+  args:
+    - -u 21
+    - -n 1
+
+- benchmark: graph500_omp_csr
+  name: graph500_omp_csr
+  description: Graph500 OpenMP Compressed-Sparse-Row
+  args:
+    - -s 20
