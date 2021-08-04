@@ -32,7 +32,7 @@ We are using a docker container based runtime for running the benchpress benchma
     ```
 * Silo
     ```
-    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run " silo default"
+    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "silo default"
     ```
 * Minebench 
     ```
