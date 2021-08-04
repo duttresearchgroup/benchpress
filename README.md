@@ -30,9 +30,9 @@ We are using a docker container based runtime for running the benchpress benchma
     ```
    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "nginx_wrk_bench default"
     ```
-* Silo
+* Graph500
     ```
-    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "silo default"
+    docker-compose run benchpress python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run "graph500_omp_csr"
     ```
 * Minebench 
     ```
