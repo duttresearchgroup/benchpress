@@ -30,7 +30,13 @@ cd silo
 # the masstree. Checks which flag gcc supports.
 MAYBE_UNINIT="$(echo | gcc -Wmaybe-uninitialized -E - >/dev/null 2>&1 && \
                 echo '-Wno-error=maybe-uninitialized')"
-cxx="g++ -std=gnu++0x ${MAYBE_UNINIT}"
+UNUSED="$(echo | gcc -Wunused-variable -E - >/dev/null 2>&1 && \
+                echo '-Wno-error=unused-variable')"
+FORMAT_TRUN="$(echo | gcc -Wunused-variable -E - >/dev/null 2>&1 && \
+                echo '-Wno-error=format-truncation')"
+
+cxx="g++ -std=gnu++0x ${MAYBE_UNINIT} ${UNUSED} ${FORMAT_TRUN}"
+
 
 # make dbtest
 CXX="${cxx}" MODE=perf DEBUG=0 CHECK_INVARIANTS=0 USE_MALLOC_MODE=1 make dbtest
