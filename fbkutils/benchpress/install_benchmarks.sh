@@ -7,7 +7,7 @@ rm -rf $BENCHMARKS_DIR
 mkdir -p $BENCHMARKS_DIR
 
 # ./install_schbench.sh
-./install_fio.sh
+./install_schbench.sh
 # ./install_silo.sh
 ./install_silo.sh
 # ./install_fio.sh
