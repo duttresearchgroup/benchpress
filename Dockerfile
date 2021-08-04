@@ -8,7 +8,13 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     git \
     libaio-dev \
-    autoconf
+    autoconf \
+    libjemalloc-dev \
+    libdb++-dev \
+    libnuma-dev \
+    libgoogle-perftools-dev \
+    libdb5.3++-dev \
+    libmysqld-dev
 
 RUN pip3 install PyYAML
 RUN mkdir -p /workspace
