@@ -18,5 +18,7 @@ mkdir -p $BENCHMARKS_DIR
 ./install_nginx_wrk_benchmark.sh
 # ./install_minebench.sh
 ./install_minebench.sh
+# ./install_graph500.sh
+./install_graph500.sh
 
 echo "Benchmarks installed into ./benchmarks/"
