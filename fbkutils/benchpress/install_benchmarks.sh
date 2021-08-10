@@ -6,19 +6,12 @@ BENCHMARKS_DIR="$(pwd)/benchmarks"
 rm -rf $BENCHMARKS_DIR
 mkdir -p $BENCHMARKS_DIR
 
-# ./install_schbench.sh
 ./install_schbench.sh
-# ./install_silo.sh
 ./install_silo.sh
-# ./install_fio.sh
 ./install_fio.sh
-# ./install_gapbs.sh
 ./install_gapbs.sh
-# ./install_nginx_wrk_benchmark.sh
 ./install_nginx_wrk_benchmark.sh
-# ./install_minebench.sh
 ./install_minebench.sh
-# ./install_graph500.sh
 ./install_graph500.sh
 
 echo "Benchmarks installed into ./benchmarks/"
