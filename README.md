@@ -1,17 +1,22 @@
 # Profiling Benchpress benchmarks
 We are using a docker container based runtime for running the benchpress benchmarks. Here we present the steps to run the apps:
 
-
-## Setting up
+## Step 1: Setting up
 * Setup the docker image for running the benchmarks
-
     `docker-compose build`
+    `pip install -r scripts/00_requirements.txt`
 
 * Install the applications locally (only required once)
 
     `docker-compose run benchpress bash install_benchmarks.sh`
 
-## Run the benchmarks
+## Step 2: Run monitoring daemon
+This is required for reporting the metrics
+
+    cd node-exporter
+    docker-compose up
+
+## Step 3: Run the benchmarks
 
 * FIO
     ``` 
