@@ -4,6 +4,7 @@ We are using a docker container based runtime for running the benchpress benchma
 ## Step 1: Setting up
 * Setup the docker image for running the benchmarks
     `docker-compose build`
+    
     `pip install -r scripts/00_requirements.txt`
 
 * Install the applications locally (only required once)

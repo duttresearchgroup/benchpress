@@ -38,6 +38,7 @@ enabled_collectors=$(cat << COLLECTORS
   stat
   thermal_zone
   textfile
+  tplink
   bonding
   udp_queues 
   vmstat

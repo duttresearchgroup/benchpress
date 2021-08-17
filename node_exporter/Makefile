@@ -29,7 +29,7 @@ MACH                    ?= $(shell uname -m)
 STATICCHECK_IGNORE =
 
 ifeq ($(GOHOSTOS), linux)
-	test-e2e := test-e2e
+	test-e2e := skip-test-e2e
 else
 	test-e2e := skip-test-e2e
 endif
