@@ -9,10 +9,9 @@ def main():
  
     df=pd.read_csv('output.csv', header=0)
     df['MIPS']=df['instructions']/df['time']/1000000
+    #scatterplot
     sns.scatterplot(data=df, x="MIPS", y="power/energy-pkg/", hue='Appname', style="Turbo Mode") 
-    # Move the legend to an empty part of the plot
-
-    plt.gcf().set_size_inches((15, 10)) 
+    plt.gcf().set_size_inches((15, 10)) #resize
     plt.savefig('power.png', bbox_inches="tight")
     plt.show()
     #boxplot
