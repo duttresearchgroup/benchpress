@@ -71,11 +71,11 @@ def main(args=sys.argv[1:]):
 
     logger.info('Loading benchmarks from "{}"'.format(args.benchmarks))
     with open(args.benchmarks) as tests_file:
-        benchmarks = yaml.load(tests_file)
+        benchmarks = yaml.safe_load(tests_file)
 
     logger.info('Loading jobs from "{}"'.format(args.jobs_file))
     with open(args.jobs_file) as jobs_file:
-        job_configs = yaml.load(jobs_file)
+        job_configs = yaml.safe_load(jobs_file)
 
     # on the first pass, construct all normal jobs, then make job suites
     jobs = [Job(j, benchmarks[j['benchmark']]) for j in job_configs
