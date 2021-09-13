@@ -28,17 +28,18 @@ def main():
                     elif re.search("time", line):
                         time=re.findall("\d+\.\d+", line)[0]
 
-                a=[int(s) for s in re.findall(r'-?\d', name)]
+                a=[int(s) for s in re.findall(r'\d+', name)]
                 data = {'power/energy-cores/':[metric_energy_cores],
                         'power/energy-pkg/':[metric_energy_pkg],
                         'instructions':[ins],
                         'time':[time],
                         'Appname' :[app_name],
-                        'iteration':[a[1]],
-                        'Turbo Mode' :[a[0]]
+                        'iteration':[a[2]],
+                        'scale':[a[1]],
+                        'CPU Freq':[a[0]]
                         }
 
-                df_tmp = pd.DataFrame(data, columns = ['Appname', 'Turbo Mode','iteration','power/energy-cores/','power/energy-pkg/','instructions','time'])
+                df_tmp = pd.DataFrame(data, columns = ['Appname', 'CPU Freq','iteration','scale','power/energy-cores/','power/energy-pkg/','instructions','time'])
                 df = pd.concat([df,df_tmp])
 
     df.to_csv(sys.argv[2], index=False) 

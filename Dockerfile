@@ -29,4 +29,4 @@ RUN wget https://ftp.gnu.org/gnu/time/time-1.9.tar.gz && \
 	
 WORKDIR /workspace/fbkutils/benchpress
 
-CMD [ "bash" ]
+CMD [ "bash", "./launch.sh" ]

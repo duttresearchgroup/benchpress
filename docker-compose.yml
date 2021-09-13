@@ -3,6 +3,7 @@ services:
   benchpress:
     image: benchpress
     build: .
+    tty: false
     volumes:
       - ./fbkutils:/workspace/fbkutils
 

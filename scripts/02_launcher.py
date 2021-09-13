@@ -35,6 +35,22 @@ def init_tracer(service):
     # this call also sets opentracing.tracer
     return config.initialize_tracer()
 
+
+def launch_container(app_test_str, scale):
+    f = open(os.path.dirname(os.path.realpath(__file__))+"/../fbkutils/benchpress/launch.sh", "w")
+    f.write("python3 benchpress_cli.py -b benchmarks.yml -j jobs/jobs.yml run \""+app_test_str+"\"")
+    f.close()
+
+    result = subprocess.run(
+        [
+            "/usr/local/bin/docker-compose", 
+            "-f", 
+            os.path.dirname(os.path.realpath(__file__))+"/../docker-compose.yml",
+            "up", 
+            "--scale", 
+            "benchpress={0}".format(scale) 
+        ])
+
 def main(args):
     tracer = init_tracer('Benchpress')
     span = tracer.start_span(operation_name="Profile")
@@ -57,22 +73,23 @@ def main(args):
     except AttributeError:
         print ("Turbo Mode not specified")
 
-    result = subprocess.run(
-        [
-            "/usr/local/bin/docker-compose", 
-            "-f", 
-            os.path.dirname(os.path.realpath(__file__))+"/../docker-compose.yml",
-            "run", 
-            "benchpress", 
-            "python3", 
-            "benchpress_cli.py", 
-            "-b", 
-            "benchmarks.yml", 
-            "-j", 
-            "jobs/jobs.yml", 
-            "run", 
-            app_test_str
-        ])
+    try:
+        args.freq
+        span.set_tag('Frequency', args.freq)
+    except AttributeError:
+        print ("Frequency not specified")
+
+    scale=1
+    try:
+        if(args.scale):
+            scale=args.scale
+        else:
+            raise AttributeError            
+    except AttributeError:
+        span.set_tag('Scale', scale)
+        print ("Scale not specified, defaulting to 1")
+
+    launch_container(app_test_str, scale)
 
     span.finish()
 
@@ -87,6 +104,8 @@ if __name__ == "__main__":
     parser.add_argument('app_name', metavar='<APPLICATION>', type=str, help='application name')
     parser.add_argument('--test', metavar='<TEST>', type=str, help='Test name', nargs='?')
     parser.add_argument('--turbo', metavar='<1/0>', type=int, help='Turbo Mode status')
+    parser.add_argument('--freq', metavar='<FREQUENCY>', type=int, help='Turbo Frequency', nargs='?')
+    parser.add_argument('--scale', metavar='<SCALE>', type=int, help='Number of instances', nargs='?')
     args = parser.parse_args()
 
     if (args.app_name is None):
