@@ -9,6 +9,7 @@ import argparse
 from urllib.parse import urlparse, parse_qs
 import asyncio
 import aiohttp
+import numpy as np
 
 # For all the fields in this list, create a separate column
 # Example: node_disk_discard_time_seconds_total{device="sda"} -> node_disk_discard_time_seconds_total__device_sda
@@ -20,8 +21,8 @@ avg_list = [ 'cpu' ]
 
 metric_name_jaeger = ['Application','Frequency']
 
-grafana_links_filename = "G_link.txt"
-jaeger_links_filename = "J_link.txt"
+grafana_links_filename = "G_links_10_08.txt"
+jaeger_links_filename = "J_links_10_08.txt"
 
 parser = argparse.ArgumentParser(description='Get data from Prometheus Server')
 
@@ -50,9 +51,7 @@ def getArguments():
     return args
 # write the query data from Prometheus and Jaeger into a csv file
 
-async def query_from_prometheus_jaeger(args):
-    prometheus_traces = open(grafana_links_filename).read().splitlines()
-    jaeger_links = open(jaeger_links_filename).read().splitlines()
+async def query_from_prometheus_jaeger(args,prometheus_traces,jaeger_links):
     for link_index in range(len(prometheus_traces)):
         # print("'", prometheus_traces[link_index], "'")
         parsed_url = urlparse(prometheus_traces[link_index])
@@ -146,11 +145,18 @@ async def query_from_prometheus_jaeger(args):
             merged_data_prometheus.to_csv(args.filename, mode='a',header=False,index=False)
         else:
             merged_data_prometheus.to_csv(args.filename,index=False)
-        
-       
+
+def execute_async(args,prometheus_traces,jaeger_links):      
+       asyncio.run(query_from_prometheus_jaeger(args,prometheus_traces,jaeger_links))
+
+
 # Main function 
 def main():
-    args = getArguments()
+    global p_traces, j_traces
+    args_ = getArguments()
+    p_traces = open(grafana_links_filename).read().splitlines()
+    j_traces = open(jaeger_links_filename).read().splitlines()
+    num_thread = os.cpu_count()
     #check the argument length
     if len(sys.argv) < 2:
         parser.print_help()
@@ -160,7 +166,13 @@ def main():
     # task2 = loop.create_task(query_from_jaeger(args))
     # await asyncio.wait([task2])
     # await asyncio.wait([task1,task2])
-    asyncio.run(query_from_prometheus_jaeger(args))
+    prometheus_splits = np.array_split(p_traces,num_thread)
+    jaeger_splits = np.array_split(j_traces,num_thread)
+    threads=[]
+    for i in range(0,num_thread):
+        threads.append(threading.Thread(target=execute_async, args=(args_,prometheus_splits[i],jaeger_splits[i],)))
+    [t.start() for t in threads]
+    [t.join() for t in threads]
     # asyncio.run(query_from_jaeger(args))
     
 

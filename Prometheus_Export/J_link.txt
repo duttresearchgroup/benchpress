@@ -1,4 +1,0 @@
-http://deep.ics.uci.edu:16686/api/traces/9fa3c9124ec503d9
-http://deep.ics.uci.edu:16686/api/traces/6719693d416d06c2
-http://deep.ics.uci.edu:16686/api/traces/fa4078523d0adb23
-http://deep.ics.uci.edu:16686/api/traces/789f21eff8ed329e
